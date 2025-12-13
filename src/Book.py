@@ -1,19 +1,24 @@
 class Book:
+    """
+    Класс книга
+    книга имеет Название Автора Год выпуска Жанр Isbn
+    """
     def __init__(self, title, author, year, genre, isbn):
-            self.title = title
-            self.author = author
-            self.year = year
-            self.genre = genre
-            self.isbn = isbn
+        """Конструктор книги"""
+        self.title = title
+        self.author = author
+        self.year = year
+        self.genre = genre
+        self.isbn = isbn
     def __str__(self):
-        """Cтроковое представление книги"""
+        """
+        Строковое предстиавление книги
+        :param self: книга
+        """
         return f" \n\"{self.title}\" {self.author} ({self.year}) - {self.genre}, ISBN: {self.isbn}"
     def __add__(self, other):
-        """
-        Создание сборника книг от одного автора
-        Возвращает новую книгу-сборник
-        Использование: book1 + book2
-        """
+        """Можно сделать собрание книг"""
+
         if self.author != other.author:
             print("Книги должны быть от 1 автора")
         else:
@@ -22,6 +27,6 @@ class Book:
             new_isbn = f"-{self.isbn[-5:]}-{other.isbn[-5:]}"
         return Book(title =  new_title, author = author, genre = "Сборник", isbn = new_isbn,year = 2025)
 
-    def __repr__(self) -> str:
-        """строковое представление объекта для воссоздания объекта"""
+    def __repr__(self):
+        """Магический метод __repr__"""
         return f"Book('{self.title}', '{self.author}', {self.year}, '{self.genre}', '{self.isbn}')"

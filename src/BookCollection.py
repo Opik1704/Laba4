@@ -3,16 +3,20 @@ from Laba4.src.TextBook import TextBook
 from Laba4.src.AudioBook import AudioBook
 
 class BookCollection:
+    """Класс BookCollection по сути список Book поддерживает __iter__,__len__,__getitem__,__contains__,__call__,__repr__"""
     def __init__(self, books_:list[Book] = None):
+        """__init__"""
         if books_ is not None:
             self.books = books_
         else:
             self.books = []
     def __getitem__(self, item):
+        """__getitem__"""
         if isinstance(item, slice):
             return BookCollection(self.books[item])
         return self.books[item]
     def __len__(self):
+        """__len__"""
         return len(self.books)
     def __iter__(self):
         return iter(self.books)
@@ -64,30 +68,34 @@ class BookCollection:
                 if match:
                     filtered_books.append(book)
             return BookCollection(filtered_books)
-        return BookCollection(self._books.copy())
+        return BookCollection(self.books.copy())
     def __repr__(self) :
-        """Cтроковое представление"""
+        """__repr__ """
         book_reprs = [repr(book) for book in self.books]
         return f"BookCollection([{', '.join(book_reprs)}])"
     def add_book(self, book):
+        """Добавляет книгу если она не повторная"""
         if book not in self.books:
             self.books.append(book)
         else:
             print(f"Такая книга с ISBN {book.isbn} уже есть в коллекции")
     def add_books(self, books:list[Book]):
+        """Добавляет списка книг """
         for book in books:
             self.add_book(book)
     def remove_book(self, book):
+        """удаляет книгу book если такая есть"""
         if book in self.books:
             self.books.remove(book)
         else:
             print(f"Такой книги с ISBN {book.isbn} нет в коллекции")
-    def remove_books_by_isbn(self, isbn: str):
+    def remove_books_by_isbn(self, isbn):
+        """Удаляет кингу по isbn"""
         for book in self.books:
             if book.isbn == isbn:
                 self.books.remove(book)
                 return True
-        print(f"Такой книги с ISBN {book.isbn} нет в коллекции")
+        print(f"Такой книги с ISBN {isbn} нет в коллекции")
         return False
 
 
