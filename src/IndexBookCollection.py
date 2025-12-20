@@ -122,10 +122,13 @@ class IndexBookCollection:
         else:
             print("Такой книги нет")
             return False
-    def find_by_author(self, author):
+    def find_by_author(self, author, list = None):
         """Поиск по автору"""
-        if self.author_index.get(author):
-            return self.author_index.get(author, []).copy()
+        if list is None:
+            list = []
+        list.append(author)
+        if author in self.author_index:
+            return self.author_index[author].copy()
         else:
             print("Такого автора нет")
             return False

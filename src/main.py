@@ -22,7 +22,7 @@ def run_simulation(steps=15, seed=None):
     print(seed, steps)
     library = Library(BookCollection(), IndexBookCollection())
     books = [
-        Book("1984", "Джордж Оруэлл", 1949, "Антиутопия", "1"),
+        Book("Title", "Author", "1949", "Антиутопия", "1"),
         Book("Скотный двор", "Джордж Оруэлл", 1945, "Сатира", "2"),
         Book("Война и мир", "Лев Толстой", 1869, "Роман", "3"),
         AudioBook("Мастер и Маргарита", "Михаил Булгаков", 1967, "Роман",
@@ -30,9 +30,21 @@ def run_simulation(steps=15, seed=None):
         TextBook("Алгебра", "Иванов И.И.", 2020, "Учебник", "5",
                  "Математика", "10 класс", "Просвещение"),
     ]
+    book_count = 0
     for book in books:
-        library.add_book(book)
-    print("Всего книг", len(library))
+        if library.add_book(book):
+            print("Удалось добавить")
+        else:
+            print("Не удалось добавить")
+    current_count = len(library)
+
+    if current_count is 0:
+        print("После добавления библиотека почему-то пуста!")
+    elif current_count is 5:
+        print("В библиотеке теперь 5 книг")
+    else:
+        print("В библиотеке теперь книг",)
+
     for step in range(steps):
         print("\nШаг",step + 1)
         action = random.choice([
@@ -50,9 +62,14 @@ def run_simulation(steps=15, seed=None):
         ])
         if action == "add_book":
             add_book(library, step)
+            book_count = book_count + 1
+            print(len(library), book_count)
         elif action == "add_books":
+            book_count = book_count + 2
             add_books(library, step)
+            print(len(library), book_count)
         elif action == "remove_book":
+            #здесь должен быть     book_count = book_count - 1
             remove_book(library)
         elif action == "find_by_isbn":
             find_by_isbn(library)
@@ -78,11 +95,13 @@ def add_book(library, step):
     Добавление 1 книги в библиотеку
     Получает библиотеку в которуб надо добавить и шаг
     """
-    book_type = random.choice(["book", "audiobook", "textbook"])
-    if book_type == "book":
+    book_type = random.choice([ "a" + "book",  "a" + "audiobook", "a" +  "textbook"])
+    if book_type == "abook":
+        print("aa")
         new_book = Book(f"Книга {step} ",f"Автор {random.randint(1, 20)}", 2000 + random.randint(0, 25),
             random.choice(["Роман", "Детектив","Фантастика"]),f"isbn{random.randint(100, 999)}")
-    elif book_type == "audiobook":
+    elif book_type == "aaudiobook":
+        print("bb")
         new_book = AudioBook(f"Аудиокнига {step}",f"Автор{random.randint(1, 20)}", 2000 + random.randint(0, 25),
             random.choice(["Роман", "Детектив","Фантастика"]),f"audio{random.randint(100, 999)}",
             f"Чтец{random.randint(1, 20)}",random.randint(300, 600),"Русский" )
@@ -255,4 +274,4 @@ if __name__ == "__main__":
     """
     Начинает симуляцию точка входа
     """
-    run_simulation(steps=15, seed=42)
+    run_simulation(steps = 30, seed= 44)
